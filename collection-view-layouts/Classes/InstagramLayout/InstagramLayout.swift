@@ -149,33 +149,24 @@ public class InstagramLayout: BaseLayout {
             let itemsCount = collectionView.numberOfItems(inSection: section)
             
             var patternSection = 0
-            var rowsCount = 0
             
             for item in 0 ..< itemsCount {
                 let itemRemainder = item % columnsCount
                 let patternSectionRemainder = patternSection % patternSectionsCount
-                let isLastItemInRow = itemRemainder == 2
                 let isLastItemInSection = item == itemsCount - 1
                 let indexPath = IndexPath(item: item, section: section)
                 let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
                 
                 if patternSectionRemainder == 0 {
-                    calculateRightPreviewSection(patternSection: &patternSection,
-                                                 remainder: itemRemainder,
-                                                 isLastItemInSection: isLastItemInSection,
-                                                 attributes: attributes)
-                } else if patternSectionRemainder == 1 || patternSectionRemainder == 3 {
-                    calculateDefaultSection(rowsCount: &rowsCount,
-                                            patternSection: &patternSection,
-                                            remainder: itemRemainder,
-                                            isLastItemInRow: isLastItemInRow,
-                                            isLastItemInSection: isLastItemInSection,
-                                            attributes: attributes)
-                } else if patternSectionRemainder == 2 {
                     calculateLeftPreviewSection(patternSection: &patternSection,
-                                                remainder: itemRemainder,
-                                                isLastItemInSection: isLastItemInSection,
-                                                attributes: attributes)
+                    remainder: itemRemainder,
+                    isLastItemInSection: isLastItemInSection,
+                    attributes: attributes)
+                } else if patternSectionRemainder == 1 {
+                    calculateRightPreviewSection(patternSection: &patternSection,
+                    remainder: itemRemainder,
+                    isLastItemInSection: isLastItemInSection,
+                    attributes: attributes)
                 }
                 
                 cachedAttributes.append(attributes)
